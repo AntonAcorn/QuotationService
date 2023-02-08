@@ -21,11 +21,11 @@ public class QuoteService {
         quoteRepository.save(quote);
     }
 
-    public void deleteQuote(Long id){
+    public void deleteQuote(Long id) {
         quoteRepository.deleteById(id);
     }
 
-    public Optional<Quote> getQuoteById(Long id){
+    public Optional<Quote> getQuoteById(Long id) {
         return quoteRepository.findById(id);
     }
 
@@ -43,5 +43,9 @@ public class QuoteService {
                     (page, limit, Sort.by(Sort.Direction.ASC, "score"))).getContent();
         }
         return quoteRepository.findAll();
+    }
+
+    public List<Quote> getLastQuotes() {
+        return quoteRepository.findAllByOrderByCreationTimeDesc();
     }
 }

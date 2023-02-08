@@ -12,7 +12,9 @@ import ru.acorn.quotation.exception.QuoteNotFoundException;
 import ru.acorn.quotation.service.QuoteService;
 import ru.acorn.quotation.utils.ErrorsUtil;
 import ru.acorn.quotation.utils.ModelMapperUtil;
+import ru.acorn.quotation.utils.RandomizerUtil;
 
+import java.net.http.HttpResponse;
 import java.util.Optional;
 
 @RestController
@@ -95,5 +97,11 @@ public class QuoteController {
                                                      @RequestParam (required = false) Boolean orderByFlop){
         var sortedList= quoteService.getQuotesByTopOrFlop(page, limit, orderByTop, orderByFlop);
         return ResponseEntity.ok().body(sortedList);
+    }
+
+    @GetMapping("/last")
+    public HttpEntity<?> getAllQuotesByCreationTime(){
+       var listOfOrderedByCreationTime = quoteService.getLastQuotes();
+        return ResponseEntity.ok().body(listOfOrderedByCreationTime);
     }
 }
