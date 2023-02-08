@@ -16,23 +16,27 @@ public class QuoteService {
         this.quoteRepository = quoteRepository;
     }
 
-    public void createQuote (Quote quote){
+    public void createQuote(Quote quote) {
         quoteRepository.save(quote);
     }
 
-    public List<Quote> getAllQuotes(){
-       return quoteRepository.findAll();
+    public List<Quote> getAllQuotes() {
+        return quoteRepository.findAll();
     }
 
-    public List<Quote> getQuotesByTopOrFlop(Integer page, Integer limit, boolean orderByTopOrFlop) {
-        if(orderByTopOrFlop){
-            return quoteRepository.findAll(PageRequest.of(page, limit, Sort.by(Sort.Direction.DESC,"score"))).getContent();
-        }else{
-            return quoteRepository.findAll(PageRequest.of(page, limit, Sort.by(Sort.Direction.ASC,"score"))).getContent();
+    public List<Quote> getQuotesByTopOrFlop(Integer page, Integer limit, boolean orderByTop, boolean orderByFlop) {
+        if (orderByTop) {
+            return quoteRepository.findAll(PageRequest.of
+                    (page, limit, Sort.by(Sort.Direction.DESC, "score"))).getContent();
         }
+        if (orderByFlop) {
+            return quoteRepository.findAll(PageRequest.of
+                    (page, limit, Sort.by(Sort.Direction.ASC, "score"))).getContent();
+        }
+        return quoteRepository.findAll();
     }
 
-    public void addScore(Long id){
+    public void addScore(Long id) {
         var quoteToAddLike = quoteRepository.findById(id);
         if (quoteToAddLike.isPresent()) {
             var quoteToAddLikePersistent = quoteToAddLike.get();
@@ -42,7 +46,7 @@ public class QuoteService {
         }
     }
 
-    public void removeScore(Long id){
+    public void removeScore(Long id) {
         var quoteToRemoveLike = quoteRepository.findById(id);
         if (quoteToRemoveLike.isPresent()) {
             var quoteToAddLikePersistent = quoteToRemoveLike.get();

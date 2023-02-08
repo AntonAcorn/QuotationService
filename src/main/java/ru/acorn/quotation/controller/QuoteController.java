@@ -53,8 +53,9 @@ public class QuoteController {
     @GetMapping("/pagination")
     public HttpEntity<?> getAllQuotesWithPagination (@RequestParam Integer page,
                                                      @RequestParam Integer limit,
-                                                     @RequestParam Boolean orderByTopOrFlop){
-        var sortedList= quoteService.getQuotesByTopOrFlop(page, limit, orderByTopOrFlop);
+                                                     @RequestParam Boolean orderByTop,
+                                                     @RequestParam Boolean orderByFlop){
+        var sortedList= quoteService.getQuotesByTopOrFlop(page, limit, orderByTop, orderByFlop);
         return ResponseEntity.ok().body(sortedList);
     }
 
