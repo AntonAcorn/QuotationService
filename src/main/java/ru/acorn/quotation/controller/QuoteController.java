@@ -77,8 +77,4 @@ public class QuoteController {
         var sortedList= quoteService.getQuotesByTopOrFlop(page, limit, orderByTop, orderByFlop);
         return ResponseEntity.ok().body(sortedList);
     }
-
-
-
-
 }
