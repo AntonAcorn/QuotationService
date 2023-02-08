@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.acorn.quotation.dto.QuoteDto;
 import ru.acorn.quotation.entity.Quote;
+import ru.acorn.quotation.exception.QuoteNotFoundException;
 import ru.acorn.quotation.service.QuoteService;
 import ru.acorn.quotation.utils.ErrorsUtil;
 import ru.acorn.quotation.utils.ModelMapperUtil;
@@ -36,6 +37,17 @@ public class QuoteController {
         }
         quoteService.createQuote(quoteToSave);
         return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @GetMapping
+    public HttpEntity<?> getAllQuotes (){
+       var allQuotes = quoteService.getAllQuotes();
+       if (allQuotes == null) {
+           var message = "Quote is not found";
+           log.debug(message);
+           throw new QuoteNotFoundException(message);
+       }
+       return ResponseEntity.ok().body(allQuotes);
     }
 
     @PostMapping("/add-score/{id}")
