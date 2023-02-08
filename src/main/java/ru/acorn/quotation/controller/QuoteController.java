@@ -50,6 +50,14 @@ public class QuoteController {
        return ResponseEntity.ok().body(allQuotes);
     }
 
+    @GetMapping("/pagination")
+    public HttpEntity<?> getAllQuotesWithPagination (@RequestParam Integer page,
+                                                     @RequestParam Integer limit,
+                                                     @RequestParam Boolean orderByTopOrFlop){
+        var sortedList= quoteService.getQuotesByTopOrFlop(page, limit, orderByTopOrFlop);
+        return ResponseEntity.ok().body(sortedList);
+    }
+
     @PostMapping("/add-score/{id}")
     public HttpEntity<HttpStatus> addScore(@PathVariable Long id){
         quoteService.addScore(id);

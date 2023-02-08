@@ -1,5 +1,7 @@
 package ru.acorn.quotation.service;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.acorn.quotation.entity.Quote;
 import ru.acorn.quotation.repository.QuoteRepository;
@@ -20,6 +22,14 @@ public class QuoteService {
 
     public List<Quote> getAllQuotes(){
        return quoteRepository.findAll();
+    }
+
+    public List<Quote> getQuotesByTopOrFlop(Integer page, Integer limit, boolean orderByTopOrFlop) {
+        if(orderByTopOrFlop){
+            return quoteRepository.findAll(PageRequest.of(page, limit, Sort.by(Sort.Direction.DESC,"score"))).getContent();
+        }else{
+            return quoteRepository.findAll(PageRequest.of(page, limit, Sort.by(Sort.Direction.ASC,"score"))).getContent();
+        }
     }
 
     public void addScore(Long id){
