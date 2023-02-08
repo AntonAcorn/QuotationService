@@ -5,9 +5,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.acorn.quotation.dto.QuoteDto;
 import ru.acorn.quotation.entity.Quote;
 import ru.acorn.quotation.service.QuoteService;
@@ -15,6 +13,7 @@ import ru.acorn.quotation.utils.ErrorsUtil;
 import ru.acorn.quotation.utils.ModelMapperUtil;
 
 @RestController
+@RequestMapping("/quotes")
 @Log4j
 public class QuoteController {
 
@@ -38,4 +37,18 @@ public class QuoteController {
         quoteService.createQuote(quoteToSave);
         return ResponseEntity.ok(HttpStatus.OK);
     }
+
+    @PostMapping("/add-score/{id}")
+    public HttpEntity<HttpStatus> addScore(@PathVariable Long id){
+        quoteService.addScore(id);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/remove-score/{id}")
+    public HttpEntity<HttpStatus> removeScore (@PathVariable Long id){
+        quoteService.removeScore(id);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+
 }

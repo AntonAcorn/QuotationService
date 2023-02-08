@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class QuoteDto {
     private String quote;
-    private Long score;
+    private Long score = 0L;
 }
