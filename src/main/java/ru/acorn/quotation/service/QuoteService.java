@@ -21,6 +21,10 @@ public class QuoteService {
         quoteRepository.save(quote);
     }
 
+    public void deleteQuote(Long id){
+        quoteRepository.deleteById(id);
+    }
+
     public Optional<Quote> getQuoteById(Long id){
         return quoteRepository.findById(id);
     }

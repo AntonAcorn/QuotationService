@@ -58,6 +58,12 @@ public class QuoteController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public HttpEntity <HttpStatus> deleteQuote (@PathVariable Long id){
+        quoteService.deleteQuote(id);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public HttpEntity<?> getQuoteById (@PathVariable Long id){
        var quoteById = quoteService.getQuoteById(id);
