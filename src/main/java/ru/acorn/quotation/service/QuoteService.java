@@ -40,24 +40,4 @@ public class QuoteService {
         }
         return quoteRepository.findAll();
     }
-
-    public void addScore(Long id) {
-        var quoteToAddLike = quoteRepository.findById(id);
-        if (quoteToAddLike.isPresent()) {
-            var quoteToAddLikePersistent = quoteToAddLike.get();
-            var score = quoteToAddLikePersistent.getScore() + 1;
-            quoteToAddLikePersistent.setScore(score);
-            quoteRepository.save(quoteToAddLikePersistent);
-        }
-    }
-
-    public void removeScore(Long id) {
-        var quoteToRemoveLike = quoteRepository.findById(id);
-        if (quoteToRemoveLike.isPresent()) {
-            var quoteToAddLikePersistent = quoteToRemoveLike.get();
-            var score = quoteToAddLikePersistent.getScore() - 1;
-            quoteToAddLikePersistent.setScore(score);
-            quoteRepository.save(quoteToAddLikePersistent);
-        }
-    }
 }

@@ -58,6 +58,19 @@ public class QuoteController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public HttpEntity<?> getQuoteById (@PathVariable Long id){
+       var quoteById = quoteService.getQuoteById(id);
+        if(quoteById.isPresent()){
+            var persistentQuote = quoteById.get();
+            return ResponseEntity.ok().body(persistentQuote);
+        }else{
+            var message = "Quote is not found";
+            log.debug(message);
+            throw new QuoteNotFoundException(message);
+        }
+    }
+
     @GetMapping
     public HttpEntity<?> getAllQuotes (){
        var allQuotes = quoteService.getAllQuotes();
