@@ -13,6 +13,8 @@ import ru.acorn.quotation.service.QuoteService;
 import ru.acorn.quotation.utils.ErrorsUtil;
 import ru.acorn.quotation.utils.ModelMapperUtil;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/quotes")
 @Log4j
@@ -35,7 +37,24 @@ public class QuoteController {
             ErrorsUtil.returnErrorMessage(bindingResult);
             log.debug(bindingResult);
         }
-        quoteService.createQuote(quoteToSave);
+        quoteService.saveQuote(quoteToSave);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public HttpEntity <HttpStatus> editQuote(@PathVariable Long id,
+                                             @RequestBody QuoteDto quoteDtoWithChanges){
+
+        Optional<Quote> quoteToChange = quoteService.getQuoteById(id);
+        if(quoteToChange.isPresent()){
+            var persistentQuote = quoteToChange.get();
+            persistentQuote.setQuote(quoteDtoWithChanges.getQuote());
+            quoteService.saveQuote(persistentQuote);
+        }else{
+            var message = "Quote is not found";
+            log.debug(message);
+            throw new QuoteNotFoundException(message);
+        }
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
@@ -59,17 +78,7 @@ public class QuoteController {
         return ResponseEntity.ok().body(sortedList);
     }
 
-    @PostMapping("/add-score/{id}")
-    public HttpEntity<HttpStatus> addScore(@PathVariable Long id){
-        quoteService.addScore(id);
-        return ResponseEntity.ok(HttpStatus.OK);
-    }
 
-    @DeleteMapping("/remove-score/{id}")
-    public HttpEntity<HttpStatus> removeScore (@PathVariable Long id){
-        quoteService.removeScore(id);
-        return ResponseEntity.ok(HttpStatus.OK);
-    }
 
 
 }

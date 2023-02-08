@@ -7,6 +7,7 @@ import ru.acorn.quotation.entity.Quote;
 import ru.acorn.quotation.repository.QuoteRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class QuoteService {
@@ -16,8 +17,12 @@ public class QuoteService {
         this.quoteRepository = quoteRepository;
     }
 
-    public void createQuote(Quote quote) {
+    public void saveQuote(Quote quote) {
         quoteRepository.save(quote);
+    }
+
+    public Optional<Quote> getQuoteById(Long id){
+        return quoteRepository.findById(id);
     }
 
     public List<Quote> getAllQuotes() {
