@@ -23,6 +23,8 @@ public class Quote {
     @NotEmpty(message = "quote should not be empty")
     private String quote;
 
+    private Long score;
+
     @CreationTimestamp
     private LocalDateTime creationTime;
 }
