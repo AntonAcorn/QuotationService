@@ -1,12 +1,15 @@
 # QuotationService
 ## Review
-This is an online library, a CRUD (Create, Read, Update, Delete) application 
-where users can add, edit, and delete person cards and books. 
-They can also assign books to specific individuals. Or just search books. This application is deployed 
-on an Amazon Web Services (AWS) Elastic Compute Cloud (EC2) and can be accessed 
-through the provided [link](http://mylibrary-env.eba-6fniism4.us-east-1.elasticbeanstalk.com). 
-It provides a user-friendly 
-and efficient way to manage and organize library resources.
+The API service allows:
+
+* Creation of a user account (deletion and other CRUD operations not requested). 
+* Addition, viewing (including a method to get a random quote), modification, 
+and deletion of quotes 
+Quote properties include content, date of creation / update, link to user who posted it, 
+* link to votes;
+voting on quotes (either upvote or downvote);
+view of the top and worse 10 quotes, the details of each quote, and ideally 
+
 
 
 ### Technology stack

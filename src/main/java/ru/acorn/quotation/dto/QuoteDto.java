@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuoteDto {
-    private String quote;
+    private String content;
     private Long score = 0L;
 }

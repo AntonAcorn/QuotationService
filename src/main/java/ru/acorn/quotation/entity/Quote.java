@@ -21,10 +21,16 @@ public class Quote {
     private Long id;
 
     @NotEmpty(message = "quote should not be empty")
-    private String quote;
+    private String content;
 
     private Long score = 0L;
 
     @CreationTimestamp
     private LocalDateTime creationTime;
+
+    private LocalDateTime timeOfUpdating;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 }
