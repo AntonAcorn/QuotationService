@@ -102,4 +102,17 @@ public class QuoteController {
        var listOfOrderedByCreationTime = quoteService.getLastQuotes();
         return ResponseEntity.ok().body(listOfOrderedByCreationTime);
     }
+
+    @GetMapping("/random")
+    public HttpEntity<?> getRandomQuote(){
+       var randomQuote = quoteService.getRandomQuote();
+       if (randomQuote.isPresent()){
+           var persistentQuote = randomQuote.get();
+           return ResponseEntity.ok().body(persistentQuote);
+       }else{
+           var message = "Quote is not found";
+           log.debug(message);
+           throw new QuoteNotFoundException(message);
+       }
+    }
 }

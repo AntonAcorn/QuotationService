@@ -8,6 +8,7 @@ import ru.acorn.quotation.repository.QuoteRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class QuoteService {
@@ -47,5 +48,20 @@ public class QuoteService {
 
     public List<Quote> getLastQuotes() {
         return quoteRepository.findAllByOrderByCreationTimeDesc();
+    }
+
+    public Optional<Quote> getRandomQuote() {
+        var size = quoteRepository.findAll().size();
+        var minValue = 0L;
+        var randomId = getRandomNumberUsingInts(minValue, (long) size);
+        return quoteRepository.findById(randomId);
+    }
+
+    public Long getRandomNumberUsingInts(Long min, Long max) {
+        var minValue = 0L;
+        Random random = new Random();
+        return random.longs(minValue, max)
+                .findFirst()
+                .getAsLong();
     }
 }
