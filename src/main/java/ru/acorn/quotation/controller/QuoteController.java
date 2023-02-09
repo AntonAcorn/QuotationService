@@ -8,9 +8,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.acorn.quotation.dto.QuoteDto;
 import ru.acorn.quotation.entity.Quote;
+import ru.acorn.quotation.exception.QuoteNotFoundException;
 import ru.acorn.quotation.service.QuoteService;
 import ru.acorn.quotation.utils.ErrorsUtil;
 import ru.acorn.quotation.utils.ModelMapperUtil;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/quotes")
@@ -34,21 +37,69 @@ public class QuoteController {
             ErrorsUtil.returnErrorMessage(bindingResult);
             log.debug(bindingResult);
         }
-        quoteService.createQuote(quoteToSave);
+        quoteService.saveQuote(quoteToSave);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @PostMapping("/add-score/{id}")
-    public HttpEntity<HttpStatus> addScore(@PathVariable Long id){
-        quoteService.addScore(id);
+    @PutMapping("/{id}")
+    public HttpEntity <HttpStatus> editQuote(@PathVariable Long id,
+                                             @RequestBody QuoteDto quoteDtoWithChanges){
+
+        Optional<Quote> quoteToChange = quoteService.getQuoteById(id);
+        if(quoteToChange.isPresent()){
+            var persistentQuote = quoteToChange.get();
+            persistentQuote.setQuote(quoteDtoWithChanges.getQuote());
+            quoteService.saveQuote(persistentQuote);
+        }else{
+            var message = "Quote is not found";
+            log.debug(message);
+            throw new QuoteNotFoundException(message);
+        }
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @DeleteMapping("/remove-score/{id}")
-    public HttpEntity<HttpStatus> removeScore (@PathVariable Long id){
-        quoteService.removeScore(id);
+    @DeleteMapping("/{id}")
+    public HttpEntity <HttpStatus> deleteQuote (@PathVariable Long id){
+        quoteService.deleteQuote(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public HttpEntity<?> getQuoteById (@PathVariable Long id){
+       var quoteById = quoteService.getQuoteById(id);
+        if(quoteById.isPresent()){
+            var persistentQuote = quoteById.get();
+            return ResponseEntity.ok().body(persistentQuote);
+        }else{
+            var message = "Quote is not found";
+            log.debug(message);
+            throw new QuoteNotFoundException(message);
+        }
+    }
 
+    @GetMapping
+    public HttpEntity<?> getAllQuotes (){
+       var allQuotes = quoteService.getAllQuotes();
+       if (allQuotes == null) {
+           var message = "Quote is not found";
+           log.debug(message);
+           throw new QuoteNotFoundException(message);
+       }
+       return ResponseEntity.ok().body(allQuotes);
+    }
+
+    @GetMapping("/pagination")
+    public HttpEntity<?> getAllQuotesWithPagination (@RequestParam (required = false) Integer page,
+                                                     @RequestParam (required = false) Integer limit,
+                                                     @RequestParam (required = false) Boolean orderByTop,
+                                                     @RequestParam (required = false) Boolean orderByFlop){
+        var sortedList= quoteService.getQuotesByTopOrFlop(page, limit, orderByTop, orderByFlop);
+        return ResponseEntity.ok().body(sortedList);
+    }
+
+    @GetMapping("/last")
+    public HttpEntity<?> getAllQuotesByCreationTime(){
+       var listOfOrderedByCreationTime = quoteService.getLastQuotes();
+        return ResponseEntity.ok().body(listOfOrderedByCreationTime);
+    }
 }
