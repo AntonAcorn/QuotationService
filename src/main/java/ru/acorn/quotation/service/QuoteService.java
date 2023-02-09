@@ -52,13 +52,17 @@ public class QuoteService {
 
     public Optional<Quote> getRandomQuote() {
         var size = quoteRepository.findAll().size();
-        var minValue = 0L;
-        var randomId = getRandomNumberUsingInts(minValue, (long) size);
-        return quoteRepository.findById(randomId);
+        var minValue = 1L;
+        if (size == minValue){
+            return quoteRepository.findById(1L);
+        }else{
+            var randomId = getRandomNumber(minValue, (long) size);
+            return quoteRepository.findById(randomId);
+        }
     }
 
-    public Long getRandomNumberUsingInts(Long min, Long max) {
-        var minValue = 0L;
+    public Long getRandomNumber(Long min, Long max) {
+        var minValue = 1L;
         Random random = new Random();
         return random.longs(minValue, max)
                 .findFirst()
