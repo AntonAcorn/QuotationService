@@ -13,8 +13,6 @@ import ru.acorn.quotation.entity.Role;
 import ru.acorn.quotation.entity.User;
 import ru.acorn.quotation.repository.UserRepository;
 
-import java.util.TreeSet;
-
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
