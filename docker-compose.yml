@@ -1,0 +1,12 @@
+version: '3.9'
+services:
+  h2:
+    container_name: 'h2'
+    hostname: 'h2'
+    image: 1000kit/h2
+    ports:
+      - "9090:9090"
+    volumes:
+      - h2-data:/opt/h2-data
+volumes:
+  h2-data:
