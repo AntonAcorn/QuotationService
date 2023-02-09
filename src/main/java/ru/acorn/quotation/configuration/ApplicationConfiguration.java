@@ -9,7 +9,7 @@ import ru.acorn.quotation.repository.UserRepository;
 
 @Configuration
 @RequiredArgsConstructor
-public class ApplicationConfig {
+public class ApplicationConfiguration {
 
     private final UserRepository userRepository;
 
