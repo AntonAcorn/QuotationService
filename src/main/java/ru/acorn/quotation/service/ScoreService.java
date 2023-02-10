@@ -20,8 +20,8 @@ public class ScoreService {
         var quoteToAddLike = quoteRepository.findById(id);
         if (quoteToAddLike.isPresent()) {
             var quoteToAddLikePersistent = quoteToAddLike.get();
-            var score = quoteToAddLikePersistent.getQuoteLike() + 1;
-            quoteToAddLikePersistent.setQuoteLike(score);
+            var like = quoteToAddLikePersistent.getQuoteLike() + 1;
+            quoteToAddLikePersistent.setQuoteLike(like);
             quoteRepository.save(quoteToAddLikePersistent);
         }else {
             var message = "Quote is not found";
@@ -31,11 +31,11 @@ public class ScoreService {
     }
 
     public void addDislike(Long id) {
-        var quoteToRemoveLike = quoteRepository.findById(id);
-        if (quoteToRemoveLike.isPresent()) {
-            var quoteToAddLikePersistent = quoteToRemoveLike.get();
-            var score = quoteToAddLikePersistent.getQuoteDislike() - 1;
-            quoteToAddLikePersistent.setQuoteDislike(score);
+        var quoteToAddDislike = quoteRepository.findById(id);
+        if (quoteToAddDislike.isPresent()) {
+            var quoteToAddLikePersistent = quoteToAddDislike.get();
+            var dislike = quoteToAddLikePersistent.getQuoteDislike() + 1;
+            quoteToAddLikePersistent.setQuoteDislike(dislike);
             quoteRepository.save(quoteToAddLikePersistent);
         }else {
             var message = "Quote is not found";
