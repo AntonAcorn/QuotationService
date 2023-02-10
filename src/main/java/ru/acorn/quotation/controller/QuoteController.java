@@ -94,6 +94,10 @@ public class QuoteController {
                                                      @RequestParam (required = false) Integer limit,
                                                      @RequestParam (required = false) Boolean orderByTop,
                                                      @RequestParam (required = false) Boolean orderByFlop){
+
+        if(page != 0){
+
+        }
         var sortedList= quoteService.getQuotesByTopOrFlop(page, limit, orderByTop, orderByFlop);
         return ResponseEntity.ok().body(sortedList);
     }
