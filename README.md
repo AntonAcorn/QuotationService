@@ -15,7 +15,7 @@ and deletion of quotes
 * Maven
 * Lombok
 * Model mapper
-* H2 Database
+* Postgresql or h2(optional)
 * Log4j
 
 ## How to run
