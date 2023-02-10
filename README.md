@@ -156,9 +156,11 @@ http://localhost:8080/quotes/{id}
 
 Get all quotes: http://localhost:8080/quotes
 
-Get all quotes with pagination(limit and page are required):  
+Get all quotes ordered by top:  
 http://localhost:8080/quotes/pagination/orderByTop?page=0&limit=5&orderByTop=true
-without ordering it will return a list of all quotations
+
+Get all quotes ordered by flop:  
+http://localhost:8080/quotes/pagination/orderByFlop?page=0&limit=5&orderByFlop=true
 
 Get a list last quote:
 http://localhost:8080/quotes/last

@@ -14,6 +14,7 @@ import ru.acorn.quotation.utils.ErrorsUtil;
 import ru.acorn.quotation.utils.ModelMapperUtil;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -96,13 +97,13 @@ public class QuoteController {
                                                   @RequestParam(required = false) Integer limit,
                                                   @RequestParam(required = false) boolean orderByTop
     ) {
+        List<Quote> sortedList;
         if (page == null || limit == null) {
-            var sortedList = quoteService.getAll(orderByTop);
-            return ResponseEntity.ok().body(sortedList);
+            sortedList = quoteService.getAll(orderByTop);
         }else{
-            var sortedList = quoteService.getQuotesByTop(page, limit, orderByTop);
-            return ResponseEntity.ok().body(sortedList);
+            sortedList = quoteService.getQuotesByTop(page, limit, orderByTop);
         }
+        return ResponseEntity.ok().body(sortedList);
     }
 
     @GetMapping("/pagination/orderByFlop")
@@ -110,13 +111,13 @@ public class QuoteController {
                                                   @RequestParam(required = false) Integer limit,
                                                   @RequestParam(required = false) boolean orderByFlop
     ) {
+        List<Quote> sortedList;
         if (page == null || limit == null) {
-            var sortedList = quoteService.getAll(orderByFlop);
-            return ResponseEntity.ok().body(sortedList);
+            sortedList = quoteService.getAll(orderByFlop);
         }else{
-            var sortedList = quoteService.getQuotesByFlop(page, limit, orderByFlop);
-            return ResponseEntity.ok().body(sortedList);
+            sortedList = quoteService.getQuotesByFlop(page, limit, orderByFlop);
         }
+        return ResponseEntity.ok().body(sortedList);
     }
 
     @GetMapping("/last")
