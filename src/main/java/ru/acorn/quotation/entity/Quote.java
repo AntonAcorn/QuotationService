@@ -21,6 +21,7 @@ public class Quote implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "content")
     @NotEmpty(message = "quote should not be empty")
     private String content;

@@ -16,14 +16,25 @@ and deletion of quotes
 * Lombok
 * Model mapper
 * H2 Database
-* Flyway
 * Log4j
 
 ## How to run
 * Clone repository
 * You should have docker and maven
 * Just use start.sh
-* To stop application use stop.sh
+* To stop application use stop.sh  
+In this case you will work with docker and postgresql  
+
+If you want to use h2 database, please, do the next steps:  
+1. Comment postgresql dependency and uncomment h2 dependency in pom.xml
+2. Rename _application.yml into application.yml and application properties to _application.properties
+3. Use command startWithH2.sh to start
+
+I recommend to connect h2 databse using Intllij IDEA or othe application
+URL: jdbc:h2:tcp://localhost:9090/mem:quoteservice  
+password: password  
+username: sa  
+Remember connection is possible only while app is running
 
 ## Endpoints
 <font color='#fa8072'>AUTHENTICATION: /auth general path

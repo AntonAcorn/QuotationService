@@ -19,7 +19,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "user_table")
+@Table(name = "user_table", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "email")})
 public class User implements UserDetails, Serializable {
 
     @Id
@@ -30,6 +31,7 @@ public class User implements UserDetails, Serializable {
     private String name;
 
     @Column(name = "email")
+
     private String email;
 
     @Column(name = "password")
