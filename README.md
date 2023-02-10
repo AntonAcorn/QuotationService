@@ -28,9 +28,10 @@ In this case you will work with docker and postgresql
 If you want to use h2 database, please, do the next steps:  
 1. Comment postgresql dependency and uncomment h2 dependency in pom.xml
 2. Rename _application.yml into application.yml and application properties to _application.properties
-3. Use command startWithH2.sh to start
+3. Uncomment method inMemoryH2DatabaseaServer in ApplicationConfiguration in case to be able to add DB using intellij Idea
+4. Use command startWithH2.sh to start
 
-I recommend to connect h2 databse using Intllij IDEA or othe application
+I recommend to connect h2 databse using Intllij IDEA or other application
 URL: jdbc:h2:tcp://localhost:9090/mem:quoteservice  
 password: password  
 username: sa  
