@@ -1,5 +1,6 @@
 package ru.acorn.quotation.service;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
 import ru.acorn.quotation.exception.QuoteNotFoundException;
@@ -15,12 +16,12 @@ public class ScoreService {
         this.quoteRepository = quoteRepository;
     }
 
-    public void addScore(Long id) {
+    public void addLike(Long id) {
         var quoteToAddLike = quoteRepository.findById(id);
         if (quoteToAddLike.isPresent()) {
             var quoteToAddLikePersistent = quoteToAddLike.get();
-            var score = quoteToAddLikePersistent.getScore() + 1;
-            quoteToAddLikePersistent.setScore(score);
+            var score = quoteToAddLikePersistent.getQuoteLike() + 1;
+            quoteToAddLikePersistent.setQuoteLike(score);
             quoteRepository.save(quoteToAddLikePersistent);
         }else {
             var message = "Quote is not found";
@@ -29,12 +30,12 @@ public class ScoreService {
         }
     }
 
-    public void removeScore(Long id) {
+    public void addDislike(Long id) {
         var quoteToRemoveLike = quoteRepository.findById(id);
         if (quoteToRemoveLike.isPresent()) {
             var quoteToAddLikePersistent = quoteToRemoveLike.get();
-            var score = quoteToAddLikePersistent.getScore() - 1;
-            quoteToAddLikePersistent.setScore(score);
+            var score = quoteToAddLikePersistent.getQuoteDislike() - 1;
+            quoteToAddLikePersistent.setQuoteDislike(score);
             quoteRepository.save(quoteToAddLikePersistent);
         }else {
             var message = "Quote is not found";

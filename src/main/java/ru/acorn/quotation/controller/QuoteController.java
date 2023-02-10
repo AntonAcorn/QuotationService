@@ -33,6 +33,7 @@ public class QuoteController {
     public HttpEntity<HttpStatus> createQuote(@RequestBody QuoteDto quoteDto,
                                      BindingResult bindingResult) {
         Quote quoteToSave = modelMapperUtil.convertFromQuoteDto(quoteDto);
+        quoteToSave.setUser(quoteDto.getUser());
         if(bindingResult.hasErrors()){
             ErrorsUtil.returnErrorMessage(bindingResult);
             log.debug(bindingResult);
@@ -48,7 +49,7 @@ public class QuoteController {
         Optional<Quote> quoteToChange = quoteService.getQuoteById(id);
         if(quoteToChange.isPresent()){
             var persistentQuote = quoteToChange.get();
-            persistentQuote.setQuote(quoteDtoWithChanges.getQuote());
+            persistentQuote.setContent(quoteDtoWithChanges.getContent());
             quoteService.saveQuote(persistentQuote);
         }else{
             var message = "Quote is not found";

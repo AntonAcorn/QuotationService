@@ -19,13 +19,13 @@ public class ScoreController {
 
     @PostMapping("/add-score/{id}")
     public HttpEntity<HttpStatus> addScore(@PathVariable Long id){
-        scoreService.addScore(id);
+        scoreService.addLike(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @DeleteMapping("/remove-score/{id}")
     public HttpEntity<HttpStatus> removeScore (@PathVariable Long id){
-        scoreService.removeScore(id);
+        scoreService.addDislike(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 }

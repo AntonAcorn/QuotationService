@@ -3,10 +3,9 @@
 The API service allows:
 
 * Creation of a user account (deletion and other CRUD operations not requested). 
-* Addition, viewing (including a method to get a random quote), modification, 
+* Addition, viewing, get a random quote, modification, 
 and deletion of quotes 
-Quote properties include content, date of creation / update, link to user who posted it, 
-* link to votes;
+Quote properties include content, date of creation / update, link to user who posted it, link to votes;
 voting on quotes (either upvote or downvote);
 view of the top and worse 10 quotes, the details of each quote, and ideally 
 
