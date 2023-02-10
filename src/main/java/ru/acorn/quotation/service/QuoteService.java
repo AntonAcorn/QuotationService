@@ -42,20 +42,32 @@ public class QuoteService {
         return quoteRepository.findAll();
     }
 
+    public List<Quote> getAll(boolean orderByTop) {
+        if (orderByTop)
+            return quoteRepository.findAll(Sort.by(Sort.Direction.DESC, "quoteLike"));
+        else
+            return quoteRepository.findAll();
+    }
+
+
     public List<Quote> getQuotesByTop(Integer page, Integer limit, boolean orderByTop) {
         if (orderByTop) {
-            return quoteRepository.findAll(PageRequest.of
+           return quoteRepository.findAll(PageRequest.of
                     (page, limit, Sort.by(Sort.Direction.DESC, "quoteLike"))).getContent();
+        }else{
+            return quoteRepository.findAll(PageRequest.of
+                    (page, limit)).getContent();
         }
-        return quoteRepository.findAll();
     }
 
     public List<Quote> getQuotesByFlop(Integer page, Integer limit, boolean orderByFlop) {
         if (orderByFlop) {
             return quoteRepository.findAll(PageRequest.of
                     (page, limit, Sort.by(Sort.Direction.DESC, "quoteDislike"))).getContent();
+        }else{
+            return quoteRepository.findAll(PageRequest.of
+                    (page, limit)).getContent();
         }
-        return quoteRepository.findAll();
     }
 
     public List<Quote> getLastQuotes() {

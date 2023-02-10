@@ -91,19 +91,32 @@ public class QuoteController {
         return ResponseEntity.ok().body(allQuotes);
     }
 
-    @GetMapping("/pagination")
-    public HttpEntity<?> getAllQuotesWithPagination(@RequestParam(required = false) Integer page,
-                                                    @RequestParam(required = false) Integer limit,
-                                                    @RequestParam(required = false) Boolean orderByTop,
-                                                    @RequestParam(required = false) Boolean orderByFlop) {
-            if(orderByTop != null && orderByFlop == null){
-                var sortedList = quoteService.getQuotesByTop(page, limit, orderByTop);
-                return ResponseEntity.ok().body(sortedList);
-            } else if (orderByTop == null && orderByFlop != null){
-                var sortedList = quoteService.getQuotesByFlop(page, limit, orderByFlop);
-                return ResponseEntity.ok().body(sortedList);
+    @GetMapping("/pagination/orderByTop")
+    public HttpEntity<?> getAllQuotesOrderedByTop(@RequestParam(required = false) Integer page,
+                                                  @RequestParam(required = false) Integer limit,
+                                                  @RequestParam(required = false) boolean orderByTop
+    ) {
+        if (page == null || limit == null) {
+            var sortedList = quoteService.getAll(orderByTop);
+            return ResponseEntity.ok().body(sortedList);
+        }else{
+            var sortedList = quoteService.getQuotesByTop(page, limit, orderByTop);
+            return ResponseEntity.ok().body(sortedList);
         }
-        return ResponseEntity.ok().body(quoteService.getAllQuotes());
+    }
+
+    @GetMapping("/pagination/orderByFlop")
+    public HttpEntity<?> getAllQuotesOrderedByFlop(@RequestParam(required = false) Integer page,
+                                                  @RequestParam(required = false) Integer limit,
+                                                  @RequestParam(required = false) boolean orderByFlop
+    ) {
+        if (page == null || limit == null) {
+            var sortedList = quoteService.getAll(orderByFlop);
+            return ResponseEntity.ok().body(sortedList);
+        }else{
+            var sortedList = quoteService.getQuotesByFlop(page, limit, orderByFlop);
+            return ResponseEntity.ok().body(sortedList);
+        }
     }
 
     @GetMapping("/last")

@@ -69,7 +69,15 @@ Getting quote by id
 
 Getting list of all quotations
 
-* <font color='#5f9ea0'> GET /pagination</font>
+* <font color='#5f9ea0'> GET /pagination/orderByTop</font>
+
+RequestParam Integer page,  
+RequestParam Integer limit,  
+RequestParam Boolean orderByTop
+
+Returns sorted list by likes
+
+* <font color='#5f9ea0'> GET /pagination/orderByFlop</font>
 
 RequestParam Integer page,  
 RequestParam Integer limit,  
@@ -140,7 +148,7 @@ http://localhost:8080/quotes
 Edit quote:
 http://localhost:8080/quotes/{id}  
 {
-"quote" : "New SomeContent"
+"content" : "New SomeContent"
 }
 
 Delete quote:
@@ -149,7 +157,7 @@ http://localhost:8080/quotes/{id}
 Get all quotes: http://localhost:8080/quotes
 
 Get all quotes with pagination(limit and page are required):  
-http://localhost:8080/quotes/pagination?page=1&limit=5&orderByTop=true&orderByFlop=false
+http://localhost:8080/quotes/pagination/orderByTop?page=0&limit=5&orderByTop=true
 without ordering it will return a list of all quotations
 
 Get a list last quote:
