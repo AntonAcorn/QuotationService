@@ -152,7 +152,17 @@ Get all quotes with pagination(limit and page are required):
 http://localhost:8080/quotes/pagination?page=1&limit=5&orderByTop=true&orderByFlop=false
 without ordering it will return a list of all quotations
 
-Get last quote:
+Get a list last quote:
+http://localhost:8080/quotes/last
+
+Get a random quote:
+http://localhost:8080/quotes/random
+
+Add like to a quote:
+http://localhost:8080/quotes/add-like/{id}
+
+Add dislike to a quote:
+http://localhost:8080/quotes/add-dislike/{id}
 
 
 

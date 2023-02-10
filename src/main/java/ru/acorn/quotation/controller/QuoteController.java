@@ -13,6 +13,7 @@ import ru.acorn.quotation.service.QuoteService;
 import ru.acorn.quotation.utils.ErrorsUtil;
 import ru.acorn.quotation.utils.ModelMapperUtil;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController
@@ -50,6 +51,7 @@ public class QuoteController {
         if (quoteToChange.isPresent()) {
             var persistentQuote = quoteToChange.get();
             persistentQuote.setContent(quoteDtoWithChanges.getContent());
+            persistentQuote.setTimeOfUpdating(LocalDateTime.now());
             quoteService.saveQuote(persistentQuote);
         } else {
             var message = "Quote is not found";
