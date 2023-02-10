@@ -33,10 +33,10 @@ public class ScoreService {
     public void addDislike(Long id) {
         var quoteToAddDislike = quoteRepository.findById(id);
         if (quoteToAddDislike.isPresent()) {
-            var quoteToAddLikePersistent = quoteToAddDislike.get();
-            var dislike = quoteToAddLikePersistent.getQuoteDislike() + 1;
-            quoteToAddLikePersistent.setQuoteDislike(dislike);
-            quoteRepository.save(quoteToAddLikePersistent);
+            var quoteToAddDislikePersistent = quoteToAddDislike.get();
+            var dislike = quoteToAddDislikePersistent.getQuoteDislike() + 1;
+            quoteToAddDislikePersistent.setQuoteDislike(dislike);
+            quoteRepository.save(quoteToAddDislikePersistent);
         }else {
             var message = "Quote is not found";
             log.debug(message);

@@ -45,11 +45,11 @@ public class QuoteService {
     public List<Quote> getQuotesByTopOrFlop(Integer page, Integer limit, boolean orderByTop, boolean orderByFlop) {
         if (orderByTop) {
             return quoteRepository.findAll(PageRequest.of
-                    (page, limit, Sort.by(Sort.Direction.DESC, "quote_like"))).getContent();
+                    (page, limit, Sort.by(Sort.Direction.DESC, "quoteLike"))).getContent();
         }
-        if (orderByFlop) {
+        else if (orderByFlop) {
             return quoteRepository.findAll(PageRequest.of
-                    (page, limit, Sort.by(Sort.Direction.ASC, "quote_dislike"))).getContent();
+                    (page, limit, Sort.by(Sort.Direction.DESC, "quoteDislike"))).getContent();
         }
         return quoteRepository.findAll();
     }
