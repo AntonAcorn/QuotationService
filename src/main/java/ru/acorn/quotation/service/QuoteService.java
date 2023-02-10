@@ -42,12 +42,16 @@ public class QuoteService {
         return quoteRepository.findAll();
     }
 
-    public List<Quote> getQuotesByTopOrFlop(Integer page, Integer limit, boolean orderByTop, boolean orderByFlop) {
+    public List<Quote> getQuotesByTop(Integer page, Integer limit, boolean orderByTop) {
         if (orderByTop) {
             return quoteRepository.findAll(PageRequest.of
                     (page, limit, Sort.by(Sort.Direction.DESC, "quoteLike"))).getContent();
         }
-        else if (orderByFlop) {
+        return quoteRepository.findAll();
+    }
+
+    public List<Quote> getQuotesByFlop(Integer page, Integer limit, boolean orderByFlop) {
+        if (orderByFlop) {
             return quoteRepository.findAll(PageRequest.of
                     (page, limit, Sort.by(Sort.Direction.DESC, "quoteDislike"))).getContent();
         }
@@ -61,9 +65,9 @@ public class QuoteService {
     public Optional<Quote> getRandomQuote() {
         var size = quoteRepository.findAll().size();
         var minValue = 1L;
-        if (size == minValue){
+        if (size == minValue) {
             return quoteRepository.findById(1L);
-        }else{
+        } else {
             var randomId = getRandomNumber(minValue, (long) size);
             return quoteRepository.findById(randomId);
         }
