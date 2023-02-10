@@ -17,13 +17,13 @@ public class ScoreController {
         this.scoreService = scoreService;
     }
 
-    @PostMapping("/add-score/{id}")
+    @PostMapping("/add-like/{id}")
     public HttpEntity<HttpStatus> addScore(@PathVariable Long id){
         scoreService.addLike(id);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @DeleteMapping("/remove-score/{id}")
+    @PostMapping("/add-dislike/{id}")
     public HttpEntity<HttpStatus> removeScore (@PathVariable Long id){
         scoreService.addDislike(id);
         return ResponseEntity.ok(HttpStatus.OK);

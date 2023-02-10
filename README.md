@@ -9,12 +9,14 @@ and deletion of quotes
 ### Technology stack
 * Java 17
 * Spring Boot
+* Spring Security
+* Spring validation
+* Jsonwebtoken library (jjwt)
 * Maven
 * Lombok
-* Thymeleaf
-* Hibernate validator
 * Model mapper
-* Postgresql
+* H2 Database
+* Flyway
 * Log4j
 
 ## How to run
@@ -23,102 +25,134 @@ and deletion of quotes
 * Just use start.sh
 * To stop application use stop.sh
 
-### If you want to run it on local machine:
-
-
 ## Endpoints
-<font color='#fa8072'>Person: /people - general path
+<font color='#fa8072'>AUTHENTICATION: /auth general path
 
-* <font color='#5f9ea0'> GET /people
+* <font color='#5f9ea0'> POST /register
 </font>
 
-Returns list of people
+Registration of a user
 
-If placed on port 7070, the request will look like:
-**localhost:7070/people**
+If placed on port 8080, the request will look like:
+**localhost:8080/auth/register**
 
-* <font color='#5f9ea0'> GET /people/{id}</font>
-
-
-  Example: /registration/1 (it will find person by id=1)
-
-* <font color='#5f9ea0'> GET /people/new</font>
-
- 
-Returns person creation page
-
-* <font color='#5f9ea0'> POST /people/create</font>
+* <font color='#5f9ea0'> POST /authenticate</font>
 
 
-Creation of a new person
+  Authentication of a user
 
-* <font color='#5f9ea0'> GET /people/{id}/edit</font>
+<font color='#fa8072'>QUOTE: /quotes general path
 
- 
-Returns person edition page
+* <font color='#5f9ea0'> POST 
+</font>
 
-* <font color='#5f9ea0'> PATH /people/{id}/</font>
+Creation of a quote
 
- 
-Edit person
+If placed on port 8080, the request will look like:
+**localhost:8080/quotes**
 
-* <font color='#5f9ea0'> DELETE /people/{id}/</font>
+* <font color='#5f9ea0'> PUT /{id}</font>
+If placed on port 8080, the request will look like:
+**localhost:8080/quotes/{id}**
 
+Modification of quote
 
-  Delete person
+* <font color='#5f9ea0'> DELETE /{id}</font>
 
-<font color='#fa8072'>Books: /books - general path</font>
+Deleting of a quote
 
-If placed on port 7070, the request will look like:
-**localhost:7070/books**
+* <font color='#5f9ea0'> GET /{id}</font>
 
-* <font color='#5f9ea0'> GET /books</font>
-Returns list of books. You can add pagination, limit and sorting
-For example, /books?page=1&books_per_page=5&sort_by_Year=true
+Getting quote by id
 
-* <font color='#5f9ea0'> GET /books/{id}</font>
+* <font color='#5f9ea0'> GET {general path}</font>
 
-Returns book by id
+Getting list of all quotations
 
-* <font color='#5f9ea0'> GET /books/new</font>
+* <font color='#5f9ea0'> GET /pagination</font>
 
-Returns book creation page
+RequestParam Integer page,  
+RequestParam Integer limit,  
+RequestParam Boolean orderByTop,  
+RequestParam Boolean orderByFlop.  
+Page and Limit are required
 
-* <font color='#5f9ea0'> POST /books </font>
-
-Create a new book
-
-* <font color='#5f9ea0'> GET /books/{id}/edit </font>
-
-Returns book creation page by id
-
-* <font color='#5f9ea0'> PATCH /books/{id} </font>
-
-Edit book
-
-* <font color='#5f9ea0'> DELETE /books/{id} </font>
-
-Delete book
-
-* <font color='#5f9ea0'> PATCH /books/{id}/release</font>
-
-Release book by id
-
-* <font color='#5f9ea0'> PATCH /books/{id}/assign</font>
-
-Assign book by id
-
-* <font color='#5f9ea0'> GET /books/search</font>
-
-Returns searching page
-
-* <font color='#5f9ea0'> POST /books/search</font>
-
-Find a book
+Returns sorted list by likes or dislikes with pagination
 
 
+* <font color='#5f9ea0'> GET /last</font>
+
+Returns last added quotations
+
+* <font color='#5f9ea0'> GET /random</font>
+
+Returns a random quote
+
+<font color='#fa8072'>SCORE: /quotes - general path</font>
+
+If placed on port 8080, the request will look like:
+**localhost:8080/quotes**
+
+* <font color='#5f9ea0'> POST /add-like/{id}</font>
+
+Add like to the quote by id
 
 
+* <font color='#5f9ea0'> POST /add-dislike/{id}</font>
+
+Add dislike to the quote by id
+
+<font color='#asdg'>Examples of json:   </font>
+
+Register user:
+http://localhost:8080/auth/register  
+{
+"name" : "Test",
+"email" : "Test@gmail.com",
+"password" : "12345"
+}  
+Here you will get registration token look like:   
+{
+"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJUZXN0QGdtYWlsLmNvbSIsImlhdCI6MTY3NjAyMzc0NSwiZXhwIjoxNjc2MDI1MTg1fQ.eMA0pIhhfYzqEl2qDShjCfldwbSK-OZHslGZfY4ZUwc"
+}
+  
+Authenticate user: http://localhost:8080/auth/authenticate  
+{
+"email" : "Test@gmail.com",
+"password" : "12345"
+}   
+Here you will get registration token look like:  
+{
+"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJUZXN0QGdtYWlsLmNvbSIsImlhdCI6MTY3NjAyMzc0NSwiZXhwIjoxNjc2MDI1MTg1fQ.eMA0pIhhfYzqEl2qDShjCfldwbSK-OZHslGZfY4ZUwc"
+}
+
+Use all next methods after authorization (bearer token)
+
+Register quote:
+http://localhost:8080/quotes  
+{
+"content" : "test1User1",
+"user" : {
+"email" : "Test@gmail.com"
+}
+}
+
+Edit quote:
+http://localhost:8080/quotes/{id}  
+{
+"quote" : "New SomeContent"
+}
+
+Delete quote:
+http://localhost:8080/quotes/{id}  
+
+Get all quotes: http://localhost:8080/quotes
+
+Get all quotes with pagination(limit and page are required):  
+http://localhost:8080/quotes/pagination?page=1&limit=5&orderByTop=true&orderByFlop=false
+without ordering it will return a list of all quotations
+
+Get last quote:
 
 
 
